@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="주식회사 코어밸류업 — 피지컬 AI·첨단기술 컨설팅, AI 솔루션 개발, 데이터·보안, 창업 보육·투자">
+<title>코어밸류업</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a slide deck — each section is one 16:9-feeling screen with eyebrow, counter and dot nav; stacks to a scroll page on phones */
+:root{
+  --bg:#EEF1F5;          /* cool machine-grey paper */
+  --surface:#FFFFFF;
+  --surface-2:#F7F8FB;
+  --fg:#121926;
+  --muted:#5C6677;
+  --line:#D3DAE4;
+  --accent:#E35A12;      /* industrial safety orange */
+  --accent-ink:#FFFFFF;
+  --steel:#1F4C8C;       /* steel blue secondary */
+  --steel-soft:#E3EBF7;
+  --topbar:rgba(238,241,245,.86);
+  --shadow:0 10px 30px rgba(18,25,38,.08);
+  --font-display:"IBM Plex Sans KR","Noto Sans KR",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-body:"Noto Sans KR","IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --topbar-h:64px;
+  --gutter-l:max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F141C; --surface:#161D28; --surface-2:#1C2432; --fg:#E7ECF3; --muted:#9AA6B8;
+    --line:#2A3443; --accent:#F3772E; --accent-ink:#14100C; --steel:#7FB0F0; --steel-soft:#1A2A42;
+    --topbar:rgba(15,20,28,.86); --shadow:0 10px 30px rgba(0,0,0,.35); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F141C; --surface:#161D28; --surface-2:#1C2432; --fg:#E7ECF3; --muted:#9AA6B8;
+  --line:#2A3443; --accent:#F3772E; --accent-ink:#14100C; --steel:#7FB0F0; --steel-soft:#1A2A42;
+  --topbar:rgba(15,20,28,.86); --shadow:0 10px 30px rgba(0,0,0,.35); color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-padding-top:var(--topbar-h)}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+h1,h2,h3,h4{font-family:var(--font-display);line-height:1.2;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;height:var(--topbar-h);background:var(--topbar);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-in{height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding-left:var(--gutter-l);padding-right:var(--gutter-r);max-width:1240px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;font-size:17px}
+.brand svg{width:28px;height:28px;display:block}
+.brand small{font-family:var(--font-mono);font-weight:400;font-size:11px;color:var(--muted);letter-spacing:.04em;margin-left:4px}
+.nav{display:flex;gap:4px}
+.nav a{text-decoration:none;font-size:14px;color:var(--muted);padding:8px 12px;border-radius:999px;white-space:nowrap}
+.nav a:hover,.nav a.active{color:var(--fg);background:var(--surface)}
+.nav a.cta{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.nav a.cta:hover{filter:brightness(1.05);color:var(--accent-ink)}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:var(--accent);transition:width .2s linear}
+.menu-btn{display:none;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:8px;padding:8px 10px;font:inherit;font-size:14px;cursor:pointer}
+
+/* deck */
+.deck{scroll-snap-type:y proximity}
+.slide{position:relative;min-height:calc(100svh - var(--topbar-h));display:grid;align-items:center;scroll-snap-align:start;border-bottom:1px solid var(--line)}
+.slide-in{width:100%;max-width:1240px;margin:0 auto;padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:72px 96px}
+.eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.eyebrow b{color:var(--accent);font-weight:500}
+.eyebrow::after{content:"";height:1px;width:48px;background:var(--line)}
+.slide h2{font-size:clamp(28px,3.4vw,44px);font-weight:700;margin-bottom:16px}
+.lede{font-size:clamp(16px,1.3vw,19px);color:var(--muted);max-width:62ch}
+.counter{position:absolute;right:var(--gutter-r);bottom:28px;font-family:var(--font-mono);font-size:12px;color:var(--muted);letter-spacing:.08em;font-variant-numeric:tabular-nums}
+.slide.alt{background:var(--surface)}
+
+/* cover */
+.cover{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.cover h1{font-size:clamp(36px,5.2vw,68px);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:22px}
+.cover h1 em{font-style:normal;color:var(--accent)}
+.cover .lede{margin-bottom:32px}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:15px;padding:13px 20px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:hover{transform:translateY(-1px)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px}
+.tags span{font-family:var(--font-mono);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:var(--surface)}
+.loop{width:100%;max-width:520px;margin:0 auto;display:block;aspect-ratio:1;height:auto}
+.loop text{font-family:var(--font-display);fill:var(--fg)}
+.loop .lab{font-family:var(--font-mono);font-size:11px;fill:var(--muted);letter-spacing:.1em}
+.loop .node{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.loop .ring{fill:none;stroke:var(--line);stroke-width:1.5;stroke-dasharray:4 6}
+.loop .arc{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round}
+.loop .core{fill:var(--steel-soft);stroke:var(--steel);stroke-width:1.5}
+@media (prefers-reduced-motion: no-preference){
+  .loop .arc{stroke-dasharray:1200;stroke-dashoffset:1200;animation:draw 2.4s ease-out forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+}
+
+/* generic grids */
+.two{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.six{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.card h3{font-size:18px;font-weight:600}
+.card p{font-size:14.5px;color:var(--muted)}
+.card ul{margin:4px 0 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:5px;font-size:14px}
+.card ul li{padding-left:14px;position:relative}
+.card ul li::before{content:"";position:absolute;left:0;top:.65em;width:6px;height:6px;border-radius:2px;background:var(--accent)}
+.card .k{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--steel);text-transform:uppercase}
+.icon{width:36px;height:36px;border-radius:10px;background:var(--steel-soft);color:var(--steel);display:grid;place-items:center;margin-bottom:4px}
+.icon svg{width:20px;height:20px}
+
+/* about */
+.facts{display:grid;grid-template-columns:auto 1fr;gap:10px 20px;font-size:15px;margin:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+.facts dt{color:var(--muted);font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;padding-top:3px}
+.facts dd{margin:0;min-width:0}
+.cvu{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.cvu.stack{grid-template-columns:1fr;gap:18px;margin-top:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 28px}
+.cvu div{border-top:3px solid var(--accent);padding-top:12px}
+.cvu.stack div{border-top:0;border-left:3px solid var(--accent);padding:2px 0 2px 16px}
+.cvu b{display:block;font-family:var(--font-display);font-size:22px;letter-spacing:-.02em;margin-bottom:4px}
+.cvu span{font-size:14px;color:var(--muted)}
+.purpose{margin-top:24px;font-size:14px;color:var(--muted)}
+.purpose strong{color:var(--fg);font-weight:600}
+
+/* physical ai */
+.why{margin-top:36px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.why div{border-left:2px solid var(--line);padding-left:16px}
+.why b{display:block;font-weight:600;margin-bottom:4px}
+.why span{font-size:14px;color:var(--muted)}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-top:12px}
+.step{position:relative;padding:28px 18px 0 0;min-width:0}
+.step::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--line)}
+.step::after{content:"";position:absolute;left:0;top:3px;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--bg)}
+.slide.alt .step::after{box-shadow:0 0 0 4px var(--surface)}
+.step .n{font-family:var(--font-mono);font-size:12px;color:var(--accent);letter-spacing:.1em}
+.step h3{font-size:18px;margin:4px 0 8px;font-weight:600}
+.step p{font-size:14px;color:var(--muted)}
+.step .out{margin-top:10px;font-size:12.5px;font-family:var(--font-mono);color:var(--steel);line-height:1.5}
+
+/* industries */
+.ind{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;min-width:0}
+.ind h3{font-size:17px;font-weight:600;margin-bottom:6px}
+.ind p{font-size:14px;color:var(--muted)}
+
+/* ceo */
+.ceo{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:start}
+.ceo-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:var(--shadow)}
+.ceo-card .name{font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-.02em}
+.ceo-card .role{color:var(--muted);font-size:14px;margin-bottom:18px}
+.ceo-card .mono{font-family:var(--font-mono);font-size:12px;color:var(--steel);letter-spacing:.08em;margin-bottom:8px}
+.bio{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.bio li{display:grid;grid-template-columns:92px 1fr;gap:12px;font-size:15px;padding:10px 0;border-bottom:1px solid var(--line)}
+.bio li span{font-family:var(--font-mono);font-size:12px;color:var(--muted);letter-spacing:.06em;padding-top:4px}
+.quote{font-family:var(--font-display);font-size:clamp(20px,2vw,26px);font-weight:500;line-height:1.45;letter-spacing:-.01em;margin:0 0 24px;padding-left:18px;border-left:3px solid var(--accent)}
+
+/* contact */
+.contact{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:start}
+.addr{display:grid;gap:14px;margin-top:24px}
+.addr div{display:grid;grid-template-columns:74px 1fr;gap:12px;font-size:15px}
+.addr span{font-family:var(--font-mono);font-size:12px;color:var(--muted);letter-spacing:.06em;padding-top:4px}
+.copyline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.copybtn{font:inherit;font-size:12px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:6px;padding:3px 8px;cursor:pointer}
+.copybtn:hover{color:var(--fg)}
+form{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px;display:grid;gap:14px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{display:grid;gap:6px;font-size:13px;color:var(--muted);font-weight:500}
+input,select,textarea{font:inherit;font-size:15px;color:var(--fg);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:11px 12px;width:100%}
+textarea{min-height:120px;resize:vertical}
+.result{display:grid;gap:10px;background:var(--surface-2);border:1px dashed var(--line);border-radius:10px;padding:16px}
+.result pre{white-space:pre-wrap;margin:0;font-family:var(--font-mono);font-size:12.5px;line-height:1.6;color:var(--fg)}
+.result .hint{font-size:13px;color:var(--muted)}
+
+/* dots & counter */
+.dots{position:fixed;right:calc(var(--gutter-r) - 2px);top:50%;transform:translateY(-50%);display:grid;gap:10px;z-index:15}
+.dots a{width:10px;height:10px;border-radius:50%;border:1px solid var(--muted);display:block;position:relative}
+.dots a.active{background:var(--accent);border-color:var(--accent)}
+.dots a::after{content:attr(data-label);position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s}
+.dots a:hover::after{opacity:1}
+.keyhint{position:fixed;left:var(--gutter-l);bottom:calc(16px + env(safe-area-inset-bottom,0px));font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.06em;z-index:15;display:flex;gap:6px;align-items:center}
+.keyhint kbd{border:1px solid var(--line);border-radius:4px;padding:1px 5px;background:var(--surface);font:inherit}
+
+footer{background:var(--surface);border-top:1px solid var(--line)}
+.foot-in{max-width:1240px;margin:0 auto;padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+
+@media (max-width: 980px){
+  .cover,.two,.ceo,.contact{grid-template-columns:1fr}
+  .four{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:1fr 1fr}
+  .step{padding-right:0}
+  .dots{display:none}
+}
+@media (max-width: 720px){
+  .deck{scroll-snap-type:none}
+  .slide{min-height:0}
+  .slide-in{padding-block:56px 64px}
+  .three,.why,.six,.cvu,.row,.steps{grid-template-columns:1fr}
+  .nav{display:none;position:absolute;top:var(--topbar-h);left:0;right:0;background:var(--surface);border-bottom:1px solid var(--line);flex-direction:column;padding:10px var(--gutter-r) 14px var(--gutter-l)}
+  .nav.open{display:flex}
+  .menu-btn{display:block}
+  .keyhint{display:none}
+  .loop{max-width:360px}
+  .bio li,.addr div{grid-template-columns:1fr}
+  .counter{bottom:20px}
+}
+@media (prefers-reduced-motion: reduce){ .btn:hover{transform:none} .progress{transition:none} }
+</style>
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#cover" aria-label="코어밸류업 홈">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="2" width="24" height="24" rx="6" fill="var(--steel)"/><rect x="8" y="8" width="7" height="7" rx="1.5" fill="#fff"/><rect x="8" y="17" width="7" height="3" rx="1.5" fill="#fff" opacity=".6"/><rect x="17" y="8" width="3" height="12" rx="1.5" fill="var(--accent)"/></svg>
+      코어밸류업 <small>corevalueup</small>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">메뉴</button>
+    <nav class="nav" id="nav">
+      <a href="#about">회사소개</a>
+      <a href="#physical-ai">피지컬 AI</a>
+      <a href="#services">사업영역</a>
+      <a href="#process">프로세스</a>
+      <a href="#industries">적용분야</a>
+      <a href="#ceo">대표소개</a>
+      <a href="#contact" class="cta">프로젝트 문의</a>
+    </nav>
+    <div class="progress" id="progress"></div>
+  </div>
+</header>
+
+<main class="deck" id="deck">
+
+  <!-- 01 표지 -->
+  <section class="slide" id="cover" data-label="표지">
+    <div class="slide-in cover">
+      <div>
+        <div class="eyebrow"><b>01</b> 주식회사 코어밸류업 · 피지컬 AI · 첨단기술 컨설팅</div>
+        <h1>피지컬 AI가<br>현장을 <em>움직이게</em> 합니다</h1>
+        <p class="lede">로봇, 자율이동체, 디지털 트윈, 스마트팩토리. 코어밸류업은 피지컬 AI와 첨단기술을 기업의 생산·물류·운영 현장에 실제로 적용하기 위한 전략 수립, 시스템 설계, 검증과 구축을 함께하는 컨설팅 회사입니다.</p>
+        <div class="btns">
+          <a class="btn primary" href="#services">사업영역 보기</a>
+          <a class="btn" href="#contact">프로젝트 문의</a>
+        </div>
+        <div class="tags">
+          <span>Physical AI</span><span>로봇·자율이동체</span><span>디지털 트윈</span><span>스마트팩토리</span><span>엣지 AI</span><span>R&amp;D 기획</span>
+        </div>
+      </div>
+      <div>
+        <svg class="loop" viewBox="0 0 520 520" role="img" aria-label="피지컬 AI 순환 구조: 인지, 판단, 행동이 현장을 중심으로 순환">
+          <circle class="ring" cx="260" cy="260" r="170"/>
+          <path class="arc" d="M 260 90 A 170 170 0 0 1 407 345"/>
+          <path class="arc" d="M 407 345 A 170 170 0 0 1 113 345"/>
+          <path class="arc" d="M 113 345 A 170 170 0 0 1 260 90"/>
+          <circle class="core" cx="260" cy="260" r="64"/>
+          <text x="260" y="254" text-anchor="middle" font-size="16" font-weight="700">현장</text>
+          <text class="lab" x="260" y="276" text-anchor="middle">FIELD</text>
+          <!-- 인지 -->
+          <circle class="node" cx="260" cy="90" r="54"/>
+          <text x="260" y="86" text-anchor="middle" font-size="18" font-weight="700">인지</text>
+          <text class="lab" x="260" y="106" text-anchor="middle">PERCEIVE</text>
+          <text class="lab" x="260" y="18" text-anchor="middle">센서 · 비전 · LiDAR</text>
+          <!-- 판단 -->
+          <circle class="node" cx="407" cy="345" r="54"/>
+          <text x="407" y="341" text-anchor="middle" font-size="18" font-weight="700">판단</text>
+          <text class="lab" x="407" y="361" text-anchor="middle">DECIDE</text>
+          <text class="lab" x="407" y="428" text-anchor="middle">모델 · 시뮬레이션 · 디지털 트윈</text>
+          <!-- 행동 -->
+          <circle class="node" cx="113" cy="345" r="54"/>
+          <text x="113" y="341" text-anchor="middle" font-size="18" font-weight="700">행동</text>
+          <text class="lab" x="113" y="361" text-anchor="middle">ACT</text>
+          <text class="lab" x="113" y="428" text-anchor="middle">로봇 · 액추에이터 · 자율이동체</text>
+        </svg>
+      </div>
+    </div>
+    <div class="counter">01 / 08</div>
+  </section>
+
+  <!-- 02 회사소개 -->
+  <section class="slide alt" id="about" data-label="회사소개">
+    <div class="slide-in">
+      <div class="eyebrow"><b>02</b> 회사소개</div>
+      <div class="two">
+        <div>
+          <h2>기술을 기업의 핵심 가치로<br>바꾸는 일을 합니다</h2>
+          <p class="lede">코어밸류업은 2026년 광주광역시에 설립된 첨단기술 컨설팅 회사입니다. 피지컬 AI를 중심으로 한 기술 도입 전략, AI 솔루션 개발, 데이터·보안, 초기 창업기업 보육과 투자까지, 기술이 실제 사업 성과로 이어지는 전 과정을 다룹니다.</p>
+          <p class="purpose"><strong>주요 사업</strong> — 창업·경영 컨설팅 및 자문, 전문·과학·기술 서비스, 학술·연구용역, 인공지능 기반 소프트웨어 및 플랫폼 개발·운영, 데이터 분석·가공, 정보보안 솔루션, 초기 창업자 선발·투자 및 전문보육, 개인투자조합 결성·운영, 환경·공학·부동산 컨설팅</p>
+        </div>
+        <div class="cvu stack">
+          <div><b>Core</b><span>핵심 기술을 선별합니다. 유행이 아니라 현장에 필요한 기술만 제안합니다.</span></div>
+          <div><b>Value</b><span>도입 효과를 숫자로 설계합니다. 생산성, 품질, 안전, 비용으로 증명합니다.</span></div>
+          <div><b>Up</b><span>고객과 함께 성장합니다. 검증 이후의 운영과 고도화까지 책임집니다.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="counter">02 / 08</div>
+  </section>
+
+  <!-- 03 피지컬 AI -->
+  <section class="slide" id="physical-ai" data-label="피지컬 AI">
+    <div class="slide-in">
+      <div class="eyebrow"><b>03</b> 피지컬 AI란</div>
+      <h2>AI가 세계를 보고, 판단하고, 움직이는 것</h2>
+      <p class="lede">챗봇이 화면 안에서 답을 내놓는 AI라면, 피지컬 AI는 센서로 물리 세계를 읽고 로봇·설비·차량을 통해 실제로 행동하는 AI입니다. 세 단계가 하나의 루프로 돌아갈 때 비로소 현장이 바뀝니다.</p>
+      <div class="three" style="margin-top:32px">
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/></svg></div>
+          <span class="k">Perceive</span>
+          <h3>인지</h3>
+          <p>카메라, LiDAR, 힘·토크 센서, IoT 계측기로 현장의 상태를 데이터로 읽어냅니다.</p>
+          <ul><li>머신비전·3D 인식</li><li>설비·환경 센싱</li><li>데이터 수집 파이프라인</li></ul>
+        </div>
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9zM12 2v2M12 20v2M2 12h2M20 12h2"/></svg></div>
+          <span class="k">Decide</span>
+          <h3>판단</h3>
+          <p>디지털 트윈과 시뮬레이션, 예측·최적화 모델로 다음 행동을 결정합니다.</p>
+          <ul><li>디지털 트윈·시뮬레이션</li><li>예측·최적화 모델</li><li>의사결정 지원 시스템</li></ul>
+        </div>
+        <div class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 20V10l6-4 6 4v10"/><path d="M10 20v-5h4v5"/><path d="M12 6V2"/></svg></div>
+          <span class="k">Act</span>
+          <h3>행동</h3>
+          <p>협동로봇, AMR·AGV, 자동화 설비가 결정을 실제 동작으로 실행합니다.</p>
+          <ul><li>협동로봇·자동화 셀</li><li>자율이동체(AMR·AGV)</li><li>엣지 제어·안전 설계</li></ul>
+        </div>
+      </div>
+      <div class="why">
+        <div><b>인력난과 고령화</b><span>숙련 인력이 빠지는 자리를 자동화가 메워야 생산을 유지할 수 있습니다.</span></div>
+        <div><b>센서·엣지 비용 하락</b><span>LiDAR와 엣지 컴퓨팅 가격이 내려가 중소 제조·물류 현장도 도입이 가능해졌습니다.</span></div>
+        <div><b>로봇용 파운데이션 모델</b><span>언어·비전 모델이 로봇 제어로 확장되며, 시나리오별 개발 비용이 크게 줄고 있습니다.</span></div>
+      </div>
+    </div>
+    <div class="counter">03 / 08</div>
+  </section>
+
+  <!-- 04 사업영역 -->
+  <section class="slide alt" id="services" data-label="사업영역">
+    <div class="slide-in">
+      <div class="eyebrow"><b>04</b> 사업영역</div>
+      <h2>전략부터 구축, 투자까지<br>네 가지 축으로 일합니다</h2>
+      <p class="lede">컨설팅으로 방향을 정하고, 솔루션으로 구현하고, 데이터와 보안으로 지키고, 투자와 보육으로 생태계를 키웁니다.</p>
+      <div class="four" style="margin-top:32px">
+        <div class="card">
+          <span class="k">Consulting</span>
+          <h3>피지컬 AI·첨단기술 컨설팅</h3>
+          <p>현장 진단부터 도입 로드맵, 투자 타당성 분석까지.</p>
+          <ul><li>스마트팩토리·디지털 전환 전략</li><li>로봇·자율이동체 도입 타당성</li><li>디지털 트윈 설계</li><li>R&amp;D 과제·정부지원사업 기획</li></ul>
+        </div>
+        <div class="card">
+          <span class="k">AI Solutions</span>
+          <h3>AI 솔루션 개발</h3>
+          <p>산업별 특화 모델과 플랫폼을 설계하고 구축합니다.</p>
+          <ul><li>산업 특화 AI 솔루션</li><li>AI 의사결정 지원 시스템</li><li>자동화·최적화 엔진</li><li>클라우드·SaaS 서비스</li></ul>
+        </div>
+        <div class="card">
+          <span class="k">Data &amp; Security</span>
+          <h3>데이터·보안</h3>
+          <p>연결된 현장을 안전하게 운영하기 위한 기반을 만듭니다.</p>
+          <ul><li>데이터 분석·가공·DB 구축</li><li>API·플랫폼 연계</li><li>정보보안·사이버 위협 분석</li><li>내부자 위협 탐지·대응</li></ul>
+        </div>
+        <div class="card">
+          <span class="k">Venture</span>
+          <h3>창업 보육·투자</h3>
+          <p>기술 창업기업을 발굴해 초기 단계를 함께 넘어갑니다.</p>
+          <ul><li>초기 창업자 선발·투자</li><li>전문 보육(액셀러레이팅)</li><li>개인투자조합 결성·운영</li><li>민관 공동창업자 발굴·육성</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="counter">04 / 08</div>
+  </section>
+
+  <!-- 05 프로세스 -->
+  <section class="slide" id="process" data-label="프로세스">
+    <div class="slide-in">
+      <div class="eyebrow"><b>05</b> 컨설팅 프로세스</div>
+      <h2>작게 검증하고, 확실해진 것만 크게 구축합니다</h2>
+      <p class="lede">피지컬 AI는 설비와 사람의 안전이 걸린 기술입니다. 그래서 진단과 설계 뒤에 반드시 PoC로 검증하고, 검증된 범위만 본 구축으로 넘깁니다.</p>
+      <div class="steps" style="margin-top:40px">
+        <div class="step"><span class="n">STEP 1</span><h3>진단</h3><p>현장 관찰, 공정·데이터 현황 분석, 병목과 자동화 후보 도출</p><div class="out">산출물 · 현황 진단서, 과제 우선순위</div></div>
+        <div class="step"><span class="n">STEP 2</span><h3>설계</h3><p>목표 KPI 정의, 시스템 아키텍처, 투자 규모와 회수 기간 산정</p><div class="out">산출물 · 도입 로드맵, 타당성 보고서</div></div>
+        <div class="step"><span class="n">STEP 3</span><h3>검증</h3><p>한 라인·한 공정 단위 PoC, 시뮬레이션과 실측으로 효과 확인</p><div class="out">산출물 · PoC 결과서, Go/No-Go 판단</div></div>
+        <div class="step"><span class="n">STEP 4</span><h3>구축</h3><p>파트너사와 함께 설비·소프트웨어 구축, 현장 교육과 안전 검수</p><div class="out">산출물 · 운영 매뉴얼, 검수 보고서</div></div>
+        <div class="step"><span class="n">STEP 5</span><h3>운영·고도화</h3><p>운영 데이터 모니터링, 모델 재학습, 확산 계획과 정부과제 연계</p><div class="out">산출물 · 월간 성과 리포트, 확산 계획</div></div>
+      </div>
+    </div>
+    <div class="counter">05 / 08</div>
+  </section>
+
+  <!-- 06 적용분야 -->
+  <section class="slide alt" id="industries" data-label="적용분야">
+    <div class="slide-in">
+      <div class="eyebrow"><b>06</b> 적용분야</div>
+      <h2>물리적 현장이 있는 모든 산업이 대상입니다</h2>
+      <p class="lede">제조에서 시작해 물류, 에너지, 공공 인프라까지. 사람과 설비가 함께 움직이는 곳이라면 피지컬 AI가 할 일이 있습니다.</p>
+      <div class="six" style="margin-top:32px">
+        <div class="ind"><h3>제조 · 스마트팩토리</h3><p>협동로봇 셀, 비전 검사, 예지보전, 공정 디지털 트윈</p></div>
+        <div class="ind"><h3>물류 · 유통</h3><p>AMR 기반 창고 자동화, 피킹 최적화, 입출고 데이터 연계</p></div>
+        <div class="ind"><h3>에너지 · 환경</h3><p>발전·ESS 설비 모니터링, 환경 센싱, 재생에너지 운영 최적화</p></div>
+        <div class="ind"><h3>공공 · 지자체</h3><p>산업단지 디지털 전환, 지역 산업 육성 전략, 공공 R&amp;D 기획</p></div>
+        <div class="ind"><h3>건설 · 플랜트</h3><p>현장 안전 모니터링, 설비 밸브·배관 점검 자동화, 시공 데이터 관리</p></div>
+        <div class="ind"><h3>농업 · 식품</h3><p>스마트팜 자동화, 선별·포장 로봇, 생육 데이터 분석</p></div>
+      </div>
+    </div>
+    <div class="counter">06 / 08</div>
+  </section>
+
+  <!-- 07 대표소개 -->
+  <section class="slide" id="ceo" data-label="대표소개">
+    <div class="slide-in">
+      <div class="eyebrow"><b>07</b> 대표소개</div>
+      <div class="ceo">
+        <div class="ceo-card">
+          <div class="mono">CEO · FOUNDER</div>
+          <div class="name">정문호</div>
+          <div class="role">대표이사 · 공학박사(산업공학)</div>
+          <ul class="bio">
+            <li><span>학력</span><div>산업공학 박사(스마트팩토리·신재생에너지·ICT), 금융공학 석사</div></li>
+            <li><span>컨설팅</span><div>스마트팩토리·SI 사업 제안 컨설팅, 정부·공공기관 사업 평가 및 자문위원</div></li>
+          </ul>
+        </div>
+        <div>
+          <h2>현장을 아는 사람이<br>기술을 제안해야 합니다</h2>
+          <p class="quote">"연구소장으로 제품을 만들고, 심사위원으로 수백 개의 과제를 평가하며 배운 것은 하나입니다. 보고서 안에서만 작동하는 기술은 현장에서 반드시 멈춥니다."</p>
+          <p class="lede">코어밸류업은 제조 현장의 R&amp;D 책임자 경험과 정부 정책·평가 경험을 한 곳에 모았습니다. 기술의 가능성뿐 아니라 설비 투자, 인력, 안전 규제, 정부 지원사업까지 함께 보고 가장 현실적인 도입 경로를 제안합니다.</p>
+        </div>
+      </div>
+    </div>
+    <div class="counter">07 / 08</div>
+  </section>
+
+  <!-- 08 문의 -->
+  <section class="slide alt" id="contact" data-label="문의">
+    <div class="slide-in">
+      <div class="eyebrow"><b>08</b> 프로젝트 문의</div>
+      <div class="contact">
+        <div>
+          <h2>현장 이야기부터<br>들려주세요</h2>
+          <p class="lede">자동화하고 싶은 공정, 도입을 검토 중인 로봇, 준비 중인 정부과제. 어떤 단계든 좋습니다. 첫 미팅에서 진단 범위와 일정을 함께 정합니다.</p>
+          <div class="addr">
+            <div><span>본사</span><div>광주광역시 서구 상무대로1019번길 14</div></div>
+            <div><span>이메일</span><div class="copyline"><span id="emailText" style="font-family:var(--font-body);font-size:15px;color:var(--fg);letter-spacing:0;padding:0"></span><button class="copybtn" type="button" id="copyEmail">복사</button></div></div>
+            <div><span>웹</span><div>www.corevalueup.com</div></div>
+          </div>
+        </div>
+        <form id="inqForm" novalidate>
+          <div class="row">
+            <label>회사 / 기관<input id="f-org" name="org" type="text" placeholder="예) ○○정밀, ○○시청" required></label>
+            <label>담당자 성함<input id="f-name" name="name" type="text" placeholder="홍길동" required></label>
+          </div>
+          <div class="row">
+            <label>회신 이메일<input id="f-email" name="email" type="email" placeholder="name@company.com" required></label>
+            <label>관심 분야<select id="f-topic" name="topic">
+              <option>피지컬 AI·로봇 도입 컨설팅</option>
+              <option>스마트팩토리·디지털 전환</option>
+              <option>AI 솔루션 개발</option>
+              <option>데이터·정보보안</option>
+              <option>정부과제·R&amp;D 기획</option>
+              <option>창업 보육·투자</option>
+              <option>기타</option>
+            </select></label>
+          </div>
+          <label>문의 내용<textarea id="f-msg" name="msg" placeholder="현장 상황, 해결하고 싶은 문제, 희망 일정 등을 적어 주세요." required></textarea></label>
+          <div class="btns">
+            <button class="btn primary" type="submit">문의 내용 정리하기</button>
+          </div>
+          <div class="result" id="result" hidden>
+            <div class="hint">아래 내용이 정리되었습니다. 복사해서 이메일로 보내 주시면 영업일 기준 2일 안에 회신드립니다.</div>
+            <pre id="resultText"></pre>
+            <div class="btns">
+              <button class="btn" type="button" id="copyResult">내용 복사</button>
+              <a class="btn" id="mailLink" href="#">메일 앱으로 열기</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="counter">08 / 08</div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-in">
+    <div>© 2026 주식회사 코어밸류업 corevalueup Co., Ltd.</div>
+    <div>광주광역시 서구 상무대로1019번길 14 · 대표이사 정문호</div>
+  </div>
+</footer>
+
+<nav class="dots" id="dots" aria-label="슬라이드 이동"></nav>
+<div class="keyhint"><kbd>↑</kbd><kbd>↓</kbd> 또는 <kbd>Space</kbd> 로 슬라이드 이동</div>
+
+<script>
+/* ===== 사이트 설정: 이메일·전화 등 여기만 바꾸면 됩니다 ===== */
+const SITE = {
+  email: "contact@corevalueup.com",   // 실제 대표 이메일로 교체
+  company: "주식회사 코어밸류업"
+};
+
+const slides = Array.from(document.querySelectorAll('.slide'));
+const dots = document.getElementById('dots');
+const navLinks = Array.from(document.querySelectorAll('.nav a'));
+const progress = document.getElementById('progress');
+
+slides.forEach((s, i) => {
+  const a = document.createElement('a');
+  a.href = '#' + s.id;
+  a.dataset.label = (i + 1).toString().padStart(2, '0') + ' ' + s.dataset.label;
+  a.setAttribute('aria-label', s.dataset.label);
+  dots.appendChild(a);
+});
+const dotLinks = Array.from(dots.children);
+
+let current = 0;
+function setActive(i) {
+  current = i;
+  dotLinks.forEach((d, k) => d.classList.toggle('active', k === i));
+  navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + slides[i].id && !l.classList.contains('cta')));
+  progress.style.width = ((i + 1) / slides.length * 100) + '%';
+}
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) setActive(slides.indexOf(e.target)); });
+}, { rootMargin: '-45% 0px -45% 0px' });
+slides.forEach(s => io.observe(s));
+
+function go(i) {
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  slides[i].scrollIntoView({ block: 'start' });
+}
+document.addEventListener('keydown', e => {
+  const t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT')) return;
+  if (['ArrowDown', 'PageDown', 'ArrowRight', ' '].includes(e.key)) { e.preventDefault(); go(current + 1); }
+  else if (['ArrowUp', 'PageUp', 'ArrowLeft'].includes(e.key)) { e.preventDefault(); go(current - 1); }
+  else if (e.key === 'Home') { e.preventDefault(); go(0); }
+  else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+});
+
+/* 모바일 메뉴 */
+const menuBtn = document.getElementById('menuBtn'), nav = document.getElementById('nav');
+menuBtn.addEventListener('click', () => {
+  const open = nav.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', String(open));
+});
+navLinks.forEach(l => l.addEventListener('click', () => { nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }));
+
+/* 해시로 열기 */
+if (location.hash) { const el = document.getElementById(location.hash.slice(1)); if (el) el.scrollIntoView({ block: 'start' }); }
+
+/* 연락처 */
+document.getElementById('emailText').textContent = SITE.email;
+async function copyText(text, btn, done) {
+  try { await navigator.clipboard.writeText(text); }
+  catch (err) {
+    const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e2) {}
+    document.body.removeChild(ta);
+  }
+  const old = btn.textContent; btn.textContent = done; setTimeout(() => btn.textContent = old, 1500);
+}
+document.getElementById('copyEmail').addEventListener('click', e => copyText(SITE.email, e.currentTarget, '복사됨'));
+
+/* 문의 폼: 서버 없이 동작 — 내용을 정리해 복사/메일 앱으로 넘깁니다 */
+const form = document.getElementById('inqForm');
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  if (!form.checkValidity()) { form.reportValidity(); return; }
+  const v = id => document.getElementById(id).value.trim();
+  const subject = `[문의] ${v('f-topic')} — ${v('f-org')}`;
+  const body = `회사/기관: ${v('f-org')}\n담당자: ${v('f-name')}\n회신 이메일: ${v('f-email')}\n관심 분야: ${v('f-topic')}\n\n문의 내용:\n${v('f-msg')}`;
+  document.getElementById('resultText').textContent = `받는 사람: ${SITE.email}\n제목: ${subject}\n\n${body}`;
+  document.getElementById('mailLink').href = 'mailto:' + SITE.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  const r = document.getElementById('result'); r.hidden = false; r.scrollIntoView({ block: 'nearest' });
+});
+document.getElementById('copyResult').addEventListener('click', e => copyText(document.getElementById('resultText').textContent, e.currentTarget, '복사됨'));
+</script>
+
+</body>
+</html>
