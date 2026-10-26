@@ -51,7 +51,7 @@
 *{box-sizing:border-box}
 html{scroll-padding-top:var(--topbar-h)}
 @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
-body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;word-break:keep-all;overflow-wrap:anywhere}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;word-break:keep-all;overflow-wrap:break-word}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
 h1,h2,h3,h4{font-family:var(--font-display);line-height:1.2;margin:0;text-wrap:balance;letter-spacing:-.01em}
 p{margin:0}
@@ -175,7 +175,7 @@ a{color:inherit}
 /* contact */
 .contact{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:start}
 .addr{display:grid;gap:14px;margin-top:24px}
-.addr div{display:grid;grid-template-columns:80px 1fr;gap:12px;font-size:16.5px}
+.addr>div{display:grid;grid-template-columns:80px 1fr;gap:12px;font-size:16.5px}
 .addr span{font-family:var(--font-body);font-size:14.5px;font-weight:500;color:var(--muted);padding-top:4px}
 .addr .copyline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .copybtn{font:inherit;font-size:12.5px;line-height:1.4;flex:0 0 auto;width:auto;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:5px;padding:1px 7px;cursor:pointer}
@@ -220,7 +220,9 @@ textarea{min-height:120px;resize:vertical}
 .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;display:block;position:relative;z-index:1}
 .photo .ph{font-family:var(--font-display);font-weight:700;font-size:34px;color:var(--steel);letter-spacing:-.02em}
 .photo .ph small{display:block;font-family:var(--font-mono);font-weight:400;font-size:10px;letter-spacing:.1em;text-align:center;margin-top:4px}
-.foot-in .biz{font-family:var(--font-body);font-size:14px}
+.foot-in .biz{font-family:var(--font-body);font-size:14px;display:flex;flex-wrap:wrap;gap:2px 0}
+.foot-in .biz span{white-space:nowrap}
+.foot-in .biz span+span::before{content:"·";margin:0 8px;opacity:.6}
 
 /* CI */
 .ci-top{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:stretch}
@@ -250,10 +252,17 @@ textarea{min-height:120px;resize:vertical}
 footer{background:var(--surface);border-top:1px solid var(--line)}
 .foot-in{max-width:1240px;margin:0 auto;padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14.5px;color:var(--muted)}
 
+@media (max-width: 1100px){
+  .nav{display:none;position:absolute;top:var(--topbar-h);left:0;right:0;background:var(--surface);border-bottom:1px solid var(--line);flex-direction:column;padding:10px var(--gutter-r) 14px var(--gutter-l)}
+  .nav.open{display:flex}
+  .nav a{font-size:16px;padding:11px 12px}
+  .menu-btn{display:block}
+}
 @media (max-width: 980px){
   .cover,.two,.ceo,.contact,.ci-top{grid-template-columns:1fr}
   .ci-colors{grid-template-columns:repeat(3,1fr)}
   .four{grid-template-columns:repeat(2,1fr)}
+  .loop{max-width:460px}
   .steps{grid-template-columns:1fr 1fr}
   .step{padding-right:0}
   .dots{display:none}
@@ -262,16 +271,17 @@ footer{background:var(--surface);border-top:1px solid var(--line)}
   .deck{scroll-snap-type:none}
   .slide{min-height:0}
   .slide-in{padding-block:56px 64px}
-  .three,.why,.six,.cvu,.row,.steps{grid-template-columns:1fr}
+  .three,.why,.six,.cvu,.row,.steps,.four{grid-template-columns:1fr}
+  .about-illus .illus .cap{font-size:24px}
+  .foot-in{flex-direction:column;gap:8px}
+  .foot-in .biz{flex-direction:column}
+  .foot-in .biz span+span::before{content:none}
   .ci-colors{grid-template-columns:1fr 1fr}
   .band .illus{min-width:760px}
   .ci-variants{grid-template-columns:1fr}
-  .nav{display:none;position:absolute;top:var(--topbar-h);left:0;right:0;background:var(--surface);border-bottom:1px solid var(--line);flex-direction:column;padding:10px var(--gutter-r) 14px var(--gutter-l)}
-  .nav.open{display:flex}
-  .menu-btn{display:block}
   .keyhint{display:none}
   .loop{max-width:360px}
-  .bio li,.addr div{grid-template-columns:1fr}
+  .bio li,.addr>div{grid-template-columns:1fr;gap:2px}
   .counter{bottom:20px}
 }
 @media (prefers-reduced-motion: reduce){ .btn:hover{transform:none} .progress{transition:none} }
@@ -687,7 +697,7 @@ footer{background:var(--surface);border-top:1px solid var(--line)}
 <footer>
   <div class="foot-in">
     <div>© 2026 CoreValueUp Co., Ltd. All rights reserved.</div>
-    <div class="biz">주식회사 코어밸류업 · 대표이사 정문호 · 사업자등록번호 244-87-03928 · 광주광역시 서구 상무대로1019번길 14 · <span id="footEmail"></span></div>
+    <div class="biz"><span>주식회사 코어밸류업</span><span>대표이사 정문호</span><span>사업자등록번호 244-87-03928</span><span>광주광역시 서구 상무대로1019번길 14</span><span id="footEmail"></span></div>
   </div>
 </footer>
 
