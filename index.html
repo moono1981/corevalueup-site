@@ -97,9 +97,11 @@ a{color:inherit}
 .btn:hover{transform:translateY(-1px)}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px}
 .tags span{font-family:var(--font-mono);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:var(--surface)}
-.loop{width:100%;max-width:520px;margin:0 auto;display:block;aspect-ratio:1;height:auto}
+.loop{width:100%;max-width:500px;margin:0 auto;display:block;aspect-ratio:56/52;height:auto}
 .loop text{font-family:var(--font-display);fill:var(--fg)}
-.loop .lab{font-family:var(--font-mono);font-size:11px;fill:var(--muted);letter-spacing:.1em}
+.loop .lab{font-family:var(--font-mono);font-size:13px;fill:var(--muted);letter-spacing:.08em}
+.loop .t{font-family:var(--font-display);font-size:24px;font-weight:700;fill:var(--fg)}
+.loop .cap2{font-family:var(--font-body);font-size:20px;font-weight:500;fill:var(--muted)}
 .loop .node{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
 .loop .ring{fill:none;stroke:var(--line);stroke-width:1.5;stroke-dasharray:4 6}
 .loop .arc{fill:none;stroke:url(#gArc);stroke-width:3;stroke-linecap:round}
@@ -315,30 +317,29 @@ footer{background:var(--surface);border-top:1px solid var(--line)}
         </div>
       </div>
       <div>
-        <svg class="loop" viewBox="0 0 520 520" role="img" aria-label="피지컬 AI 순환 구조: 인지, 판단, 행동이 현장을 중심으로 순환">
+        <svg class="loop" viewBox="0 0 560 520" role="img" aria-label="피지컬 AI 순환 구조: 인지, 판단, 행동이 현장을 중심으로 순환">
           <defs><linearGradient id="gArc" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2B5BC8"/><stop offset=".5" stop-color="#6A45C8"/><stop offset=".8" stop-color="#CD44D8"/><stop offset="1" stop-color="#35C6F4"/></linearGradient></defs>
-          <circle class="ring" cx="260" cy="260" r="170"/>
-          <path class="arc" d="M 260 90 A 170 170 0 0 1 407 345"/>
-          <path class="arc" d="M 407 345 A 170 170 0 0 1 113 345"/>
-          <path class="arc" d="M 113 345 A 170 170 0 0 1 260 90"/>
-          <circle class="core" cx="260" cy="260" r="64"/>
-          <text x="260" y="254" text-anchor="middle" font-size="16" font-weight="700">현장</text>
-          <text class="lab" x="260" y="276" text-anchor="middle">FIELD</text>
-          <!-- 인지 -->
-          <circle class="node" cx="260" cy="90" r="54"/>
-          <text x="260" y="86" text-anchor="middle" font-size="18" font-weight="700">인지</text>
-          <text class="lab" x="260" y="106" text-anchor="middle">PERCEIVE</text>
-          <text class="lab" x="260" y="18" text-anchor="middle">센서 · 비전 · LiDAR</text>
-          <!-- 판단 -->
-          <circle class="node" cx="407" cy="345" r="54"/>
-          <text x="407" y="341" text-anchor="middle" font-size="18" font-weight="700">판단</text>
-          <text class="lab" x="407" y="361" text-anchor="middle">DECIDE</text>
-          <text class="lab" x="407" y="428" text-anchor="middle">모델 · 시뮬레이션 · 디지털 트윈</text>
-          <!-- 행동 -->
-          <circle class="node" cx="113" cy="345" r="54"/>
-          <text x="113" y="341" text-anchor="middle" font-size="18" font-weight="700">행동</text>
-          <text class="lab" x="113" y="361" text-anchor="middle">ACT</text>
-          <text class="lab" x="113" y="428" text-anchor="middle">로봇 · 액추에이터 · 자율이동체</text>
+          <circle class="ring" cx="280" cy="260" r="140"/>
+          <path class="arc" d="M 280 120 A 140 140 0 0 1 401.2 330"/>
+          <path class="arc" d="M 401.2 330 A 140 140 0 0 1 158.8 330"/>
+          <path class="arc" d="M 158.8 330 A 140 140 0 0 1 280 120"/>
+          <circle class="core" cx="280" cy="260" r="52"/>
+          <text class="t" x="280" y="258" text-anchor="middle">현장</text>
+          <text class="lab" x="280" y="280" text-anchor="middle">FIELD</text>
+          <circle class="node" cx="280" cy="120" r="50"/>
+          <text class="t" x="280" y="118" text-anchor="middle">인지</text>
+          <text class="lab" x="280" y="140" text-anchor="middle">PERCEIVE</text>
+          <text class="cap2" x="280" y="44" text-anchor="middle">센서 · 비전 · LiDAR</text>
+          <circle class="node" cx="401.2" cy="330" r="50"/>
+          <text class="t" x="401.2" y="328" text-anchor="middle">판단</text>
+          <text class="lab" x="401.2" y="350" text-anchor="middle">DECIDE</text>
+          <text class="cap2" x="401.2" y="420" text-anchor="middle">모델 · 시뮬레이션</text>
+          <text class="cap2" x="401.2" y="448" text-anchor="middle">디지털 트윈</text>
+          <circle class="node" cx="158.8" cy="330" r="50"/>
+          <text class="t" x="158.8" y="328" text-anchor="middle">행동</text>
+          <text class="lab" x="158.8" y="350" text-anchor="middle">ACT</text>
+          <text class="cap2" x="158.8" y="420" text-anchor="middle">로봇 · 액추에이터</text>
+          <text class="cap2" x="158.8" y="448" text-anchor="middle">자율이동체</text>
         </svg>
       </div>
     </div>
