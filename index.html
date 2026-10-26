@@ -97,7 +97,7 @@ a{color:inherit}
 .btn:hover{transform:translateY(-1px)}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px}
 .tags span{font-family:var(--font-mono);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:var(--surface)}
-.loop{width:100%;max-width:500px;margin:0 auto;display:block;aspect-ratio:56/52;height:auto}
+.loop{width:100%;max-width:600px;margin:0 auto;display:block;aspect-ratio:460/448;height:auto}
 .loop text{font-family:var(--font-display);fill:var(--fg)}
 .loop .lab{font-family:var(--font-mono);font-size:13px;fill:var(--muted);letter-spacing:.08em}
 .loop .t{font-family:var(--font-display);font-size:24px;font-weight:700;fill:var(--fg)}
@@ -207,7 +207,9 @@ textarea{min-height:120px;resize:vertical}
 .illus .ac{fill:var(--accent);stroke:none}
 .illus .acl{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round}
 .illus .gd{stroke:var(--line);stroke-width:1}
-.illus .cap{font-family:var(--font-mono);font-size:10px;fill:var(--muted);letter-spacing:.08em}
+.illus .cap{font-family:var(--font-body);font-size:18px;font-weight:500;fill:var(--muted)}
+.about-illus .illus .cap{font-size:20px}
+.band{overflow-x:auto}
 .about-illus{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 8px;margin-bottom:18px}
 .band{margin-top:30px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px 10px}
 .slide.alt .band,.slide.alt .about-illus{background:var(--surface-2)}
@@ -229,8 +231,8 @@ textarea{min-height:120px;resize:vertical}
 .ci-variants div{border-radius:12px;border:1px solid var(--line);display:grid;place-items:center;padding:18px;min-height:96px}
 .ci-variants .rev{background:#0B1A3F}
 .ci-variants .sym{background:var(--surface)}
-.ci-variants img{max-height:58px;width:auto;max-width:100%}
-.ci-variants span{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;color:var(--muted);margin-top:8px}
+.ci-variants img{max-height:72px;width:auto;max-width:100%}
+.ci-variants span{font-family:var(--font-body);font-size:14px;font-weight:500;color:var(--muted);margin-top:8px}
 .ci-variants .rev span{color:#9CA6C6}
 .ci-mean{display:grid;gap:12px}
 .ci-mean>div{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
@@ -241,8 +243,8 @@ textarea{min-height:120px;resize:vertical}
 .ci-colors{margin-top:26px;display:grid;grid-template-columns:repeat(5,1fr) 1.6fr;gap:12px}
 .chip{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--surface);min-width:0}
 .chip i{display:block;height:58px}
-.chip div{padding:9px 12px;font-size:13px;font-weight:600}
-.chip code{display:block;font-family:var(--font-mono);font-size:11px;color:var(--muted);font-weight:400;margin-top:2px}
+.chip div{padding:10px 12px;font-size:15px;font-weight:600}
+.chip code{display:block;font-family:var(--font-mono);font-size:13px;color:var(--muted);font-weight:400;margin-top:2px}
 .slide.alt .ci-mean>div,.slide.alt .chip,.slide.alt .ci-variants .sym{background:var(--surface-2)}
 
 footer{background:var(--surface);border-top:1px solid var(--line)}
@@ -262,6 +264,7 @@ footer{background:var(--surface);border-top:1px solid var(--line)}
   .slide-in{padding-block:56px 64px}
   .three,.why,.six,.cvu,.row,.steps{grid-template-columns:1fr}
   .ci-colors{grid-template-columns:1fr 1fr}
+  .band .illus{min-width:760px}
   .ci-variants{grid-template-columns:1fr}
   .nav{display:none;position:absolute;top:var(--topbar-h);left:0;right:0;background:var(--surface);border-bottom:1px solid var(--line);flex-direction:column;padding:10px var(--gutter-r) 14px var(--gutter-l)}
   .nav.open{display:flex}
@@ -317,7 +320,7 @@ footer{background:var(--surface);border-top:1px solid var(--line)}
         </div>
       </div>
       <div>
-        <svg class="loop" viewBox="0 0 560 520" role="img" aria-label="피지컬 AI 순환 구조: 인지, 판단, 행동이 현장을 중심으로 순환">
+        <svg class="loop" viewBox="50 18 460 448" role="img" aria-label="피지컬 AI 순환 구조: 인지, 판단, 행동이 현장을 중심으로 순환">
           <defs><linearGradient id="gArc" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2B5BC8"/><stop offset=".5" stop-color="#6A45C8"/><stop offset=".8" stop-color="#CD44D8"/><stop offset="1" stop-color="#35C6F4"/></linearGradient></defs>
           <circle class="ring" cx="280" cy="260" r="140"/>
           <path class="arc" d="M 280 120 A 140 140 0 0 1 401.2 330"/>
@@ -359,7 +362,7 @@ footer{background:var(--surface);border-top:1px solid var(--line)}
         <div>
         <div class="about-illus">
           <!-- 스마트팩토리 라인: 컨베이어 위 제품, 비전 검사, 협동로봇 피킹, AMR 반출 -->
-          <svg class="illus" viewBox="0 0 560 230" role="img" aria-label="스마트팩토리 라인 일러스트: 비전 검사, 협동로봇, 자율이동로봇이 하나의 라인으로 연결">
+          <svg class="illus" viewBox="0 0 560 246" role="img" aria-label="스마트팩토리 라인 일러스트: 비전 검사, 협동로봇, 자율이동로봇이 하나의 라인으로 연결">
             <g class="gd"><line x1="20" y1="200" x2="540" y2="200"/><line x1="20" y1="214" x2="540" y2="214"/></g>
             <!-- conveyor -->
             <rect class="fl" x="40" y="150" width="300" height="22" rx="4"/>
@@ -376,7 +379,7 @@ footer{background:var(--surface);border-top:1px solid var(--line)}
             <rect class="fl" x="168" y="84" width="26" height="18" rx="3"/>
             <circle class="ac" cx="181" cy="93" r="4"/>
             <path class="acl" d="M166 104 L160 124 M196 104 L202 124" opacity=".6"/>
-            <text class="cap" x="181" y="32" text-anchor="middle">VISION</text>
+            <text class="cap" x="142" y="57" text-anchor="end">비전 검사</text>
             <!-- cobot -->
             <rect class="fl" x="372" y="170" width="56" height="30" rx="4"/>
             <circle class="st" cx="400" cy="168" r="12"/>
@@ -387,19 +390,19 @@ footer{background:var(--surface);border-top:1px solid var(--line)}
             <path class="ln" d="M312 94 L300 116"/>
             <path class="ln" d="M292 116 h16 M292 116 v10 M308 116 v10"/>
             <rect class="ac" x="294" y="128" width="12" height="4" rx="1"/>
-            <text class="cap" x="400" y="218" text-anchor="middle">COBOT</text>
+            <text class="cap" x="400" y="236" text-anchor="middle">협동로봇</text>
             <!-- AMR -->
             <rect class="fl" x="452" y="160" width="76" height="30" rx="6"/>
             <circle class="ln" cx="468" cy="192" r="7"/><circle class="ln" cx="512" cy="192" r="7"/>
             <rect class="st" x="462" y="132" width="56" height="28" rx="3"/>
             <path class="acl" d="M444 150 a 16 16 0 0 1 0 -20" opacity=".7"/>
             <path class="acl" d="M436 156 a 24 24 0 0 1 0 -32" opacity=".35"/>
-            <text class="cap" x="490" y="218" text-anchor="middle">AMR</text>
+            <text class="cap" x="494" y="236" text-anchor="middle">AMR</text>
             <!-- data link -->
             <path class="ln2" d="M181 40 C 181 10, 400 10, 400 60"/>
             <rect class="fl" x="372" y="60" width="56" height="30" rx="4"/>
             <path class="acl" d="M380 82 l8-10 l8 6 l8-12 l8 8 l8-6"/>
-            <text class="cap" x="400" y="52" text-anchor="middle">DIGITAL TWIN</text>
+            <text class="cap" x="438" y="82" text-anchor="start">디지털 트윈</text>
           </svg>
         </div>
         <div class="cvu stack">
@@ -460,7 +463,7 @@ footer{background:var(--surface);border-top:1px solid var(--line)}
       <p class="lede">챗봇이 화면 안에서 답을 내놓는 AI라면, 피지컬 AI는 센서로 물리 세계를 읽고 로봇·설비·차량을 통해 실제로 행동하는 AI입니다. 세 단계가 하나의 루프로 돌아갈 때 비로소 현장이 바뀝니다.</p>
       <div class="band">
         <!-- 인지(센서 타워) → 판단(엣지/트윈) → 행동(로봇·AMR) 흐름 -->
-        <svg class="illus" viewBox="0 0 1100 220" role="img" aria-label="인지, 판단, 행동 흐름 일러스트">
+        <svg class="illus" viewBox="0 0 1100 214" role="img" aria-label="인지, 판단, 행동 흐름 일러스트">
           <!-- flow line -->
           <path class="ln2" d="M300 120 H 400 M700 120 H 800"/>
           <path class="acl" d="M392 112 l10 8 l-10 8 M792 112 l10 8 l-10 8"/>
@@ -481,8 +484,8 @@ footer{background:var(--surface);border-top:1px solid var(--line)}
           <g class="gd"><path d="M486 76 h128 M486 96 h128 M486 116 h128 M486 136 h128 M486 156 h128 M506 76 v80 M538 76 v80 M570 76 v80 M602 76 v80"/></g>
           <path class="acl" d="M486 150 L516 120 L538 134 L570 92 L602 104 L614 84" stroke-width="2.5"/>
           <circle class="ac" cx="614" cy="84" r="4"/>
-          <rect class="st" x="530" y="40" width="40" height="20" rx="4"/>
-          <text class="cap" x="550" y="54" text-anchor="middle" style="fill:var(--steel)">EDGE</text>
+          <rect class="st" x="516" y="30" width="68" height="30" rx="5"/>
+          <text class="cap" x="550" y="51" text-anchor="middle" style="fill:var(--steel);font-size:15px;font-weight:600">EDGE</text>
           <text class="cap" x="550" y="196" text-anchor="middle">DECIDE · 디지털 트윈 · 최적화</text>
           <!-- ACT: robot arm + AMR -->
           <rect class="fl" x="840" y="156" width="70" height="14" rx="4"/>
